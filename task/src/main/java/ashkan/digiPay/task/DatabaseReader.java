@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashMap;
 
+import ashkan.digiPay.task.dataHolders.DataStorage;
+import ashkan.digiPay.task.dataHolders.Product;
+
 public class DatabaseReader extends ConnectionManager{
 	LinkedHashMap<Integer , DataStorage> dataList = new LinkedHashMap<>();
 	public void productList() {

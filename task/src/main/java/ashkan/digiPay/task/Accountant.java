@@ -3,7 +3,13 @@ package ashkan.digiPay.task;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+import ashkan.digiPay.task.dataHolders.DataStorage;
+import ashkan.digiPay.task.dataHolders.ExtraCost;
+import ashkan.digiPay.task.dataHolders.InvoiceLine;
 
 public class Accountant extends ConnectionManager{
 	private static HashMap<Integer, Integer> localShoppingCart = new HashMap<>();
@@ -44,13 +50,49 @@ public class Accountant extends ConnectionManager{
 					+ " FROM shoppingCart"
 					+ " LEFT JOIN products ON shoppingCart.productfk = products.id"
 					+ " WHERE userID = "+fakeUserID);
-			st.close();
+			InvoiceLine invoiceLine;
+			LinkedHashMap<Integer , DataStorage> invoice = new LinkedHashMap<>();
+			int i = 0;
 			while(rs.next()) {
-				System.out.println(rs.getInt("count"));
+				i++;
+				invoiceLine = new InvoiceLine();
+				invoiceLine.name = rs.getString("name");
+				invoiceLine.count = rs.getInt("count");
+				invoiceLine.price = rs.getDouble("price");
+				addExtraCosts(invoiceLine);
+				invoice.put(i,invoiceLine);
 			}
+			Printer.print(invoice, printType.Invoice);
+			st.close();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			System.out.println("Error loading shopping cart data!");
+		}
+	}
+	
+	private static void addExtraCosts(InvoiceLine input) {
+		//there is no limit on how many extra costs can be added, zero extra cost is also acceptable
+		// Fixed additional cost: Delivery for each item
+		
+		ExtraCost ec = new ExtraCost();
+		ec.name = "Delivery";
+		ec.fixCost = 5;
+		ec.isPercentage = false;
+		input.extraCosts.add(ec);
+		
+		// Percentage based additional cost: Delivery for each item
+		ec = new ExtraCost();
+		ec.name = "TAX";
+		ec.percentage = 9;
+		ec.isPercentage = true;
+		input.extraCosts.add(ec);
+		
+	}
+	
+	public static double calculateExtraCosts(ExtraCost input , double cost, int count) {
+		if(input.isPercentage) {
+			return input.percentage * count * cost / 100;
+		}else {
+			return input.fixCost * count;
 		}
 	}
 }
