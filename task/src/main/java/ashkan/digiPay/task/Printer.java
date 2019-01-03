@@ -53,12 +53,11 @@ public class Printer {
 					}
 				}
 				if(!il.extraCosts.isEmpty()) {
-					System.out.println("-----  Item Final Price is: "+ itemTotalPrice+"$ -----");
+					System.out.println("**  Item Final Price is: "+ itemTotalPrice+"$ **");
 				}
 				sum = sum + itemTotalPrice;
 			}
-			System.out.println("-------------------------------");
-			System.out.println("Required Payment: "+sum);
+			System.out.println("###### Required Payment: "+sum+"$ ######");
 			break;
 	}
 	}
