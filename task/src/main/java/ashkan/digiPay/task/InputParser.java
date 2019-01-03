@@ -39,5 +39,24 @@ public class InputParser extends ConnectionManager{
 		}
 		
 		System.out.println("How many "+name+" do you want?(each cost "+price+"$)");
+		done = false;
+		int count;
+		
+		while(!done) {
+			String input = scanner. nextLine();
+			try {
+				count = Integer.parseInt(input);
+			}catch (Exception e) {
+				System.out.println("Please enter number value only:");
+				continue;
+			}
+			if(count<1) {
+				System.out.println("Item count should be bigger than 0! Please enter a valid number:");
+			}else {
+				done = true;
+			}
+		}
+		
+		
 	}
 }
