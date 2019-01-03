@@ -13,13 +13,23 @@ public class InitialData {
             st.execute("CREATE TABLE products ("
             		+ "id INT NOT NULL AUTO_INCREMENT,"
             		+ "name VARCHAR(255),"
-            		+ "price DOUBLE)");
+            		+ "price DOUBLE,"
+            		+ "PRIMARY KEY (id)"
+            		+ ")");
+          //creating shopping cart table
+            st.execute("CREATE TABLE shoppingCart ("
+            		+ "userID INT NOT NULL,"
+            		+ "productfk INT NOT NULL,"
+            		+ "count INT NOT NULL,"
+            		+ "FOREIGN KEY (productfk) REFERENCES products(id),"
+            		+ "CHECK (count > 0)"
+            		+ ")");
             
             //change this part to manipulate available products
             st.execute("INSERT INTO products (name,price) VALUES ('T-Shirt',40)");
             st.execute("INSERT INTO products (name,price) VALUES ('Jacket',110)");
             st.execute("INSERT INTO products (name,price) VALUES ('Jogger Pants',80)");
-            
+    		st.close();
             
         }catch(SQLException e) {
         	System.out.println("There was a problem inserting initial data!");

@@ -8,8 +8,14 @@ public class RunThisOne {
 		
 		DatabaseReader reader = new DatabaseReader();
 		reader.productList();
+		reader.printProductList();
 		
-		InputParser.addToShoppingCart();
+		while(!InputParser.addToShoppingCart()) {
+			reader.printProductList();
+		}
+		
+		Accountant.checkout();
+		Accountant.createInvoice();
 	}
 
 }

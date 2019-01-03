@@ -5,10 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-//different output types
-enum printType{
-	ProductList
-}
+
 public class ConnectionManager {
 	//using in memory database side effects
     static Connection conn = null;

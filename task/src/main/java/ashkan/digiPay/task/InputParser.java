@@ -8,19 +8,26 @@ import java.util.Scanner;
 public class InputParser extends ConnectionManager{
 	private static Scanner scanner = new Scanner(System.in);
 
-	public static void addToShoppingCart() {
+	public static boolean addToShoppingCart() {
 		boolean done = false;
 		String name = "";
 		double price = 0;
+		int id = 0;
 		while(!done) {
 			String input = scanner. nextLine();
-			int id = 0;
 			try {
 				id = Integer.parseInt(input);
 			}catch (Exception e) {
 				System.out.println("Please enter number value only(ID):");
 				continue;
 			}
+			
+			
+			if(id == 0) {
+				return true;
+			}
+			
+			
 			try {
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery("SELECT * FROM products WHERE id = "+id);
@@ -32,6 +39,7 @@ public class InputParser extends ConnectionManager{
 					System.out.println(id+" is not valid, please enter an ID from list above:");
 					continue;
 				}
+				st.close();
 
 			}catch (SQLException e) {
 				System.out.println("Problem Connecting to database(adding to shopping list)");
@@ -40,7 +48,7 @@ public class InputParser extends ConnectionManager{
 		
 		System.out.println("How many "+name+" do you want?(each cost "+price+"$)");
 		done = false;
-		int count;
+		int count = 0;
 		
 		while(!done) {
 			String input = scanner. nextLine();
@@ -57,6 +65,8 @@ public class InputParser extends ConnectionManager{
 			}
 		}
 		
+		Accountant.addItem(id, count);
+		return false;
 		
 	}
 }
