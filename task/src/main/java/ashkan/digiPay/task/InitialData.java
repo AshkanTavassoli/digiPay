@@ -30,6 +30,7 @@ public class InitialData {
             st.execute("INSERT INTO products (name,price) VALUES ('T-Shirt',40)");
             st.execute("INSERT INTO products (name,price) VALUES ('Jacket',110)");
             st.execute("INSERT INTO products (name,price) VALUES ('Jogger Pants',80)");
+            st.execute("INSERT INTO products (name,price) VALUES ('Sunglasses',180)");
     		st.close();
             
         }catch(SQLException e) {
