@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import ashkan.digiPay.task.Services.DatabaseReader;
-import ashkan.digiPay.task.Services.ShoppingCartManager;
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.ManagerResponse;
 import ashkan.digiPay.task.enums.MessageType;
 import ashkan.digiPay.task.enums.PrintType;
+import ashkan.digiPay.task.services.DatabaseReader;
+import ashkan.digiPay.task.services.ShoppingCartManager;
 import ashkan.digiPay.task.utilities.Accountant;
 import ashkan.digiPay.task.utilities.ConnectionManager;
 import ashkan.digiPay.task.utilities.ExternalDataLoader;
