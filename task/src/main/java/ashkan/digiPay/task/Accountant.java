@@ -1,5 +1,6 @@
 package ashkan.digiPay.task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -34,35 +35,27 @@ public class Accountant{
 			}
 	}
 	
-	public static void createInvoice(HashMap<Integer, Integer> localShoppingCart, DatabaseReader reader) {
+	public static void createInvoice(HashMap<Integer, Integer> localShoppingCart, DatabaseReader reader, ArrayList<ExtraCost> extraCostLists) {
 			InvoiceLine invoiceLine;
 			LinkedHashMap<Integer , DataStorage> invoice = new LinkedHashMap<>();
 			invoice = reader.readFinalInvoice(fakeUserID,invoice);
 			for(int i :invoice.keySet()) {
 				invoiceLine = (InvoiceLine) invoice.get(i);
-				addExtraCosts(invoiceLine);
+				addExtraCosts(invoiceLine,extraCostLists);
 				invoice.put(i,invoiceLine);
 			}
 			Printer.print(invoice, PrintType.Invoice,localShoppingCart);
 
 	}
 	
-	private static void addExtraCosts(InvoiceLine input) {
+	private static void addExtraCosts(InvoiceLine input, ArrayList<ExtraCost> extraCostLists) {
 		//there is no limit on how many extra costs can be added, zero extra cost is also acceptable
-		// Fixed additional cost: Delivery for each item
 		
-		ExtraCost ec = new ExtraCost();
-		ec.name = "Delivery";
-		ec.fixCost = 5;
-		ec.isPercentage = false;
-		input.extraCosts.add(ec);
+		for(ExtraCost cost : extraCostLists) {
+			input.extraCosts.add(cost);
+		}
 		
-		// Percentage based additional cost: Delivery for each item
-		ec = new ExtraCost();
-		ec.name = "TAX";
-		ec.percentage = 9;
-		ec.isPercentage = true;
-		input.extraCosts.add(ec);
+
 		
 	}
 	

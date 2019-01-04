@@ -1,0 +1,6 @@
+Put extra costs setting like pattern below:
+Name(String)/Percentage(0<x<=100)(double)(0 - > fixed cost)/fixed cost(float)(put 0 if is percentage based)
+/INPUT/
+Tax/9/0
+Discount/-20/0
+Delivery Costs/0/5

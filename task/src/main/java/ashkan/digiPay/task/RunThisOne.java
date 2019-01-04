@@ -1,9 +1,11 @@
 package ashkan.digiPay.task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import ashkan.digiPay.task.dataHolders.DataStorage;
+import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.ManagerResponse;
 import ashkan.digiPay.task.dataHolders.MessageType;
 import ashkan.digiPay.task.dataHolders.PrintType;
@@ -14,6 +16,7 @@ public class RunThisOne {
 		//initializing database and require connection
 		ConnectionManager.connect();
 		InitialData.createDatabase();
+		ArrayList<ExtraCost> extraCostLists = ExternalDataLoader.extraCostsLoader();
 		
 		DatabaseReader reader = new DatabaseReader();
 		LinkedHashMap<Integer , DataStorage> dataList;
@@ -44,7 +47,7 @@ public class RunThisOne {
 		}
 		
 		Accountant.checkout(localShoppingCart);
-		Accountant.createInvoice(localShoppingCart,reader);
+		Accountant.createInvoice(localShoppingCart,reader,extraCostLists);
 	}
 
 }
