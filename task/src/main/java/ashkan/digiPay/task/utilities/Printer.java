@@ -1,5 +1,6 @@
 package ashkan.digiPay.task.utilities;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -12,6 +13,7 @@ import ashkan.digiPay.task.enums.PrintType;
 
 
 public class Printer {
+	private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 	public static void print(LinkedHashMap<Integer, DataStorage> dataList,PrintType pt,HashMap<Integer, Integer> localShoppingCart) {
 		switch(pt) {
 		case ProductList:
@@ -51,11 +53,11 @@ public class Printer {
 					}
 				}
 				if(!il.extraCosts.isEmpty()) {
-					System.out.println("**  Item Final Price is: "+ itemTotalPrice+"$ **");
+					System.out.println("**  Item Final Price is: "+ decimalFormat.format(itemTotalPrice)+"$ **");
 				}
 				sum = sum + itemTotalPrice;
 			}
-			System.out.println("###### Required Payment: "+sum+"$ ######");
+			System.out.println("###### Required Payment: "+decimalFormat.format(sum)+"$ ######");
 			break;
 		case HowMany:
 			Product product = (Product) dataList.get(0);
