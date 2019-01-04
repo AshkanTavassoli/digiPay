@@ -11,6 +11,11 @@ Any enviroment with a console can run it. It uses h2 databases so I suggest you 
 Just add h2 dependency (Suggestion: use provided pom and Maven) and run "runThisOne" class.
 
 ## Deployment
+First things first: Open ExtraCosts file(with any text editor) and add or delete any extra cost you like using provided pattern.
+
+DO NOT TOUCH "/INPUT/" PART!
+`
+
 In order to use this in a live system:
 
 First: change "ConnectionManager" so it connects to your required database.
