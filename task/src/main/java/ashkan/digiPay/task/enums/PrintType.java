@@ -1,4 +1,4 @@
-package ashkan.digiPay.task.dataHolders;
+package ashkan.digiPay.task.enums;
 
 public enum PrintType {
 	ProductList,

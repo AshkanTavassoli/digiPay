@@ -1,13 +1,15 @@
-package ashkan.digiPay.task;
+package ashkan.digiPay.task.utilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import ashkan.digiPay.task.Services.DatabaseReader;
+import ashkan.digiPay.task.Services.DatabaseWriter;
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.InvoiceLine;
-import ashkan.digiPay.task.dataHolders.PrintType;
+import ashkan.digiPay.task.enums.PrintType;
 
 public class Accountant{
 	private static int fakeUserID = 1;
@@ -30,8 +32,9 @@ public class Accountant{
 	}
 	
 	public static void checkout(HashMap<Integer, Integer> localShoppingCart) {
+		DatabaseWriter writer = new DatabaseWriter();
 			for(int i:localShoppingCart.keySet()) {
-				DatabaseWriter.addInvoiceLine(fakeUserID, i, localShoppingCart.get(i));
+				writer.addInvoiceLine(fakeUserID, i, localShoppingCart.get(i));
 			}
 	}
 	

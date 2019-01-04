@@ -1,4 +1,4 @@
-package ashkan.digiPay.task;
+package ashkan.digiPay.task.utilities;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.InvoiceLine;
-import ashkan.digiPay.task.dataHolders.MessageType;
-import ashkan.digiPay.task.dataHolders.PrintType;
 import ashkan.digiPay.task.dataHolders.Product;
+import ashkan.digiPay.task.enums.MessageType;
+import ashkan.digiPay.task.enums.PrintType;
 
 
 public class Printer {

@@ -1,4 +1,4 @@
-package ashkan.digiPay.task;
+package ashkan.digiPay.task.Services;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -6,9 +6,10 @@ import java.util.Scanner;
 
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ManagerResponse;
-import ashkan.digiPay.task.dataHolders.MessageType;
-import ashkan.digiPay.task.dataHolders.PrintType;
 import ashkan.digiPay.task.dataHolders.Product;
+import ashkan.digiPay.task.enums.MessageType;
+import ashkan.digiPay.task.enums.PrintType;
+import ashkan.digiPay.task.utilities.Printer;
 
 public class ShoppingCartManager{
 	private Scanner scanner = new Scanner(System.in);

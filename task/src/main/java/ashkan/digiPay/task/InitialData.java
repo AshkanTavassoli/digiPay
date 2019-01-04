@@ -1,13 +1,14 @@
 package ashkan.digiPay.task;
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class InitialData {
-	public static void createDatabase() {
+	public static void createDatabase(Connection conn) {
         try {
-        	Statement st = ConnectionManager.conn.createStatement();
+        	Statement st = conn.createStatement();
         	
         	//creating Product table
             st.execute("CREATE TABLE products ("

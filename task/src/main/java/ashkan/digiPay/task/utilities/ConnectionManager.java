@@ -1,4 +1,4 @@
-package ashkan.digiPay.task;
+package ashkan.digiPay.task.utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
 	//using in memory database side effects
-    static Connection conn = null;
+    protected static Connection conn = null;
 
-	public static void connect() {
+	public static Connection connect() {
         String url = "jdbc:h2:mem:";
         try {
         	conn = DriverManager.getConnection(url);
@@ -18,6 +18,7 @@ public class ConnectionManager {
         	System.out.println("There was a problem connecting to h2 memory database!");
         	System.exit(1);
         }
+        return conn;
 	}
 
  

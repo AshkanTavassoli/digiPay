@@ -1,4 +1,4 @@
-package ashkan.digiPay.task;
+package ashkan.digiPay.task.Services;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.InvoiceLine;
 import ashkan.digiPay.task.dataHolders.Product;
+import ashkan.digiPay.task.utilities.ConnectionManager;
 
 public class DatabaseReader extends ConnectionManager{
 	public LinkedHashMap<Integer , DataStorage> productList() {

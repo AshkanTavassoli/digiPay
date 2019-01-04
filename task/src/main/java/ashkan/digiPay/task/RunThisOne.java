@@ -1,21 +1,28 @@
 package ashkan.digiPay.task;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import ashkan.digiPay.task.Services.DatabaseReader;
+import ashkan.digiPay.task.Services.ShoppingCartManager;
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.ManagerResponse;
-import ashkan.digiPay.task.dataHolders.MessageType;
-import ashkan.digiPay.task.dataHolders.PrintType;
+import ashkan.digiPay.task.enums.MessageType;
+import ashkan.digiPay.task.enums.PrintType;
+import ashkan.digiPay.task.utilities.Accountant;
+import ashkan.digiPay.task.utilities.ConnectionManager;
+import ashkan.digiPay.task.utilities.ExternalDataLoader;
+import ashkan.digiPay.task.utilities.Printer;
 
 public class RunThisOne {
 
 	public static void main(String[] args) {
 		//initializing database and require connection
-		ConnectionManager.connect();
-		InitialData.createDatabase();
+		Connection conn = ConnectionManager.connect();
+		InitialData.createDatabase(conn);
 		ArrayList<ExtraCost> extraCostLists = ExternalDataLoader.extraCostsLoader();
 		
 		DatabaseReader reader = new DatabaseReader();
