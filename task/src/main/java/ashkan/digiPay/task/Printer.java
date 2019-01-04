@@ -1,19 +1,18 @@
 package ashkan.digiPay.task;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.InvoiceLine;
+import ashkan.digiPay.task.dataHolders.MessageType;
+import ashkan.digiPay.task.dataHolders.PrintType;
 import ashkan.digiPay.task.dataHolders.Product;
-//different output types
-enum printType{
-	ProductList,
-	Invoice
-}
+
 
 public class Printer {
-	public static void print(LinkedHashMap<Integer, DataStorage> dataList,printType pt) {
+	public static void print(LinkedHashMap<Integer, DataStorage> dataList,PrintType pt,HashMap<Integer, Integer> localShoppingCart) {
 		switch(pt) {
 		case ProductList:
 			System.out.println("Available products:");
@@ -21,7 +20,7 @@ public class Printer {
 			int countSelected = 0;
 			for(int i : dataList.keySet()) {
 				pd = (Product) dataList.get(i);
-				countSelected = Accountant.getCount(pd.ID);
+				countSelected = Accountant.getCount(pd.ID,localShoppingCart);
 				if(countSelected>0) {
 					System.out.println(pd.ID+" : "+pd.Name+" -- Price: "+pd.Price+"$ -- You have already requested "+countSelected+" of this.");
 				}else {
@@ -29,7 +28,6 @@ public class Printer {
 				}
 			}
 			System.out.println("0 : Checkout");
-			System.out.println("Please enter selected product ID:");
 			break;
 		case Invoice:
 			System.out.println("-----------------------------------------------------");
@@ -59,6 +57,31 @@ public class Printer {
 			}
 			System.out.println("###### Required Payment: "+sum+"$ ######");
 			break;
+		case HowMany:
+			Product product = (Product) dataList.get(0);
+			System.out.println("How many "+product.Name+" do you want?(each cost "+product.Price+"$)");
+			break;
 	}
+	}
+	
+	public static void printMessage(MessageType type) {
+		switch(type) {
+			case NormalInput:
+				System.out.println("Please enter selected product ID:");
+				break;
+			case WrongInput:
+				System.out.println("Please enter number values only(ID):");
+				break;
+			case InvalidID:
+				System.out.println("Please choose between IDs listed above:");
+				break;
+			case InvalidCount:
+				System.out.println("Item count should be bigger than 0! Please enter a valid number:");
+				break;
+			case EMPTY:
+				break;
+		default:
+			break;
+		}
 	}
 }

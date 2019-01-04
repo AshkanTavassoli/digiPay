@@ -1,27 +1,26 @@
 package ashkan.digiPay.task;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import ashkan.digiPay.task.dataHolders.DataStorage;
 import ashkan.digiPay.task.dataHolders.ExtraCost;
 import ashkan.digiPay.task.dataHolders.InvoiceLine;
+import ashkan.digiPay.task.dataHolders.PrintType;
 
-public class Accountant extends ConnectionManager{
-	private static HashMap<Integer, Integer> localShoppingCart = new HashMap<>();
+public class Accountant{
 	private static int fakeUserID = 1;
-	public static void addItem(int id,int count) {
+	public static HashMap<Integer, Integer> addItem(int id,int count,HashMap<Integer, Integer> localShoppingCart) {
 		if(localShoppingCart.containsKey(id)){
 			localShoppingCart.put(id, localShoppingCart.get(id) + count);
+			return localShoppingCart;
 		}else {
 			localShoppingCart.put(id,count);
+			return localShoppingCart;
 		}
 	}
 	
-	public static Integer getCount(int id) {
+	public static Integer getCount(int id,HashMap<Integer, Integer> localShoppingCart) {
 		if(localShoppingCart.containsKey(id)) {
 			return localShoppingCart.get(id);
 		}else {
@@ -29,43 +28,23 @@ public class Accountant extends ConnectionManager{
 		}
 	}
 	
-	public static void checkout() {
-		try {
-			Statement st = conn.createStatement();
+	public static void checkout(HashMap<Integer, Integer> localShoppingCart) {
 			for(int i:localShoppingCart.keySet()) {
-	            st.execute("INSERT INTO shoppingCart (userID,productfk,count)"
-	            		+ " VALUES ("+fakeUserID+","+i+","+localShoppingCart.get(i)+")");
+				DatabaseWriter.addInvoiceLine(fakeUserID, i, localShoppingCart.get(i));
 			}
-			st.close();
-		} catch (SQLException e) {
-			System.out.println("Could not save shopping cart into database!");
-		}
 	}
 	
-	public static void createInvoice() {
-		try {
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT shoppingCart.count count, products.name name, products.price price"
-					+ " FROM shoppingCart"
-					+ " LEFT JOIN products ON shoppingCart.productfk = products.id"
-					+ " WHERE userID = "+fakeUserID);
+	public static void createInvoice(HashMap<Integer, Integer> localShoppingCart, DatabaseReader reader) {
 			InvoiceLine invoiceLine;
 			LinkedHashMap<Integer , DataStorage> invoice = new LinkedHashMap<>();
-			int i = 0;
-			while(rs.next()) {
-				i++;
-				invoiceLine = new InvoiceLine();
-				invoiceLine.name = rs.getString("name");
-				invoiceLine.count = rs.getInt("count");
-				invoiceLine.price = rs.getDouble("price");
+			invoice = reader.readFinalInvoice(fakeUserID,invoice);
+			for(int i :invoice.keySet()) {
+				invoiceLine = (InvoiceLine) invoice.get(i);
 				addExtraCosts(invoiceLine);
 				invoice.put(i,invoiceLine);
 			}
-			Printer.print(invoice, printType.Invoice);
-			st.close();
-		} catch (SQLException e) {
-			System.out.println("Error loading shopping cart data!");
-		}
+			Printer.print(invoice, PrintType.Invoice,localShoppingCart);
+
 	}
 	
 	private static void addExtraCosts(InvoiceLine input) {
