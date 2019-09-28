@@ -1,5 +1,5 @@
 # Shoping Cart Manager
-A simple test task  
+A simple test task to show available products to the user and create a shopping cart and invoice based on user choices using Command Line 
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
